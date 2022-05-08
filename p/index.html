@@ -1,0 +1,108 @@
+<html>
+<head>
+<title>Mixlr IP Audio</title>
+<style>
+body {
+background-color: black;
+}
+
+button {
+    font-size: larger;
+    width: 180px;
+    height: 60px;
+    background-color: darkblue;
+    color: white;
+    padding: 20px;
+    margin: 10px;
+}
+
+#audio-container {
+display: none;
+}
+audio {
+  position: relative;
+  margin: 100px 5% auto 5%;
+  width: 90%;
+  max-width: 500px;
+  height: 80px;
+  background: #000;
+}
+audio::before {
+  position: absolute;
+  content: '';
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  left: -2px;
+  top: -2px;
+  background: linear-gradient(to left, #007db5, #ff8a00);
+  z-index: -1;
+}
+</style>
+</head>
+<body>
+
+<button onclick="switchRadio(1)">beIN Radio 1</button>
+<button onclick="switchRadio(2)">beIN Radio 2</button>
+<button onclick="switchRadio(3)">BBC Radio 1</button>
+<button onclick="switchRadio(4)">BBC Radio 2</button>
+<br/>
+<div id="audio-container">
+<audio controls autoplay="true" muted="true">
+  <source src="about:blank" type="audio/mpeg">
+</audio>
+</div>
+
+<script>
+var audio = document.querySelector("audio");
+var sourcetag = document.querySelector("source");
+
+var sp=1;
+
+function switchRadio(p) {
+    document.getElementById("audio-container").innerHTML="";
+        var sound      = document.createElement('audio');
+sound.autoplay       = 'true';
+sound.controls = 'controls';
+sound.type     = 'audio/mpeg';
+document.getElementById('audio-container').appendChild(sound);
+	if(p==1){
+		sourcetag.setAttribute("src","https://mixlr.com/bein-spoooooooort2%D8%B1%D8%A7%D8%AF%D9%8A%D9%88%D8%A7%D8%B4%D8%B1%D9%81/");
+	}
+	else if (p==2){
+		sourcetag.setAttribute("src","https://mixlr.com/bein_spoooooooort%D8%B1%D8%A7%D8%AF%D9%8A%D9%88%D8%A7%D8%B4%D8%B1%D9%813/");
+	} else if(p==3){
+		sourcetag.setAttribute("src","http://stream.live.vc.bbcmedia.co.uk/bbc_radio_one");
+	 } else if(p==4){
+		sourcetag.setAttribute("src","http://stream.live.vc.bbcmedia.co.uk/bbc_radio_two");
+	}
+    sp=p;
+    audio.pause();
+    audio.load();
+    audio.muted=false;
+    audio.play();
+
+}
+
+var reloadCheck;
+var reloadThisTime;
+
+audio.addEventListener('waiting', (event) => {
+  console.log("No connection");
+  reloadCheck = setTimeout(function(){
+    if(reloadThisTime){
+switchRadio(sp);
+reloadThisTime=false;
+    };
+  });
+});
+
+audio.addEventListener('playing', (event) => {
+  console.log("Connected");
+  clearTimeout(reloadCheck);
+  reloadThisTime = true;
+});
+
+</script>
+
+</body>
+</html>
