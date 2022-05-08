@@ -45,6 +45,8 @@ audio::before {
 <button onclick="switchRadio(2)">beIN Radio 2</button>
 <button onclick="switchRadio(3)">BBC Radio 1</button>
 <button onclick="switchRadio(4)">BBC Radio 2</button>
+<button onclick="switchRadio(5)">BBC Radio 5 Live</button>
+	
 <br/>
 <div id="audio-container">
 <audio controls autoplay="true" muted="true">
@@ -74,6 +76,8 @@ document.getElementById('audio-container').appendChild(sound);
 		sourcetag.setAttribute("src","http://stream.live.vc.bbcmedia.co.uk/bbc_radio_one");
 	 } else if(p==4){
 		sourcetag.setAttribute("src","http://stream.live.vc.bbcmedia.co.uk/bbc_radio_two");
+	} else if (p==5){
+		sourcetag.setAttribute("src","http://stream.live.vc.bbcmedia.co.uk/bbc_radio_five_live");	
 	}
     sp=p;
     audio.pause();
